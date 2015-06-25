@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\IDataPersistance.cs" />
     <Compile Include="ViewModel\AdaptiveUIViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
