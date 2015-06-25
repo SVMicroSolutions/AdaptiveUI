@@ -27,5 +27,7 @@ namespace AdaptiveUIDemo
             this.DataContext = new AdaptiveUIViewModel();
             
         }
+
+
     }
 }

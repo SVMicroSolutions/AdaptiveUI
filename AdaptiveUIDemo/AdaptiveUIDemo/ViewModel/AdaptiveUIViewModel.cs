@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AdaptiveUIDemo.ViewModel
 {
@@ -10,6 +11,19 @@ namespace AdaptiveUIDemo.ViewModel
     {
         #region Properties 
         private string appName = String.Empty;
+        private ICommand m_GoBtn;
+        public ICommand GoBtn
+        {
+            get
+            { return m_GoBtn; }
+            set
+            {
+                m_GoBtn = value;
+            }
+
+        }
+
+       
 
         public string AppName
         {
@@ -32,8 +46,13 @@ namespace AdaptiveUIDemo.ViewModel
         public AdaptiveUIViewModel()
         {
             this.AppName = "Adaptive UI Rocks!";
+            GoBtn = new CommandExecutor(new Action<object>(GoExecute));
 
         }
-
+        private void GoExecute(object obj)
+        {
+            System.Diagnostics.Debug.WriteLine("I have been clicked.");
+        }
+        
     }
 }

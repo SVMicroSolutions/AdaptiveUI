@@ -21,10 +21,8 @@ namespace AdaptiveUIDemo.ViewModel
 
         public void Execute(object parameter)
         {
-            if (parameter != null)
-            {
-                this.action(parameter);
-            }
+              this.action(parameter);
+            
         }
     }
 }
