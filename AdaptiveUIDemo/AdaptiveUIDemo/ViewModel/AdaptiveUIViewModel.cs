@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using AdaptiveUIDemo.Interfaces;
-using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace AdaptiveUIDemo.ViewModel
 {
