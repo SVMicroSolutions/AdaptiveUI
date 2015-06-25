@@ -1,0 +1,40 @@
+﻿<Window x:Class="AdaptiveUIDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdaptiveUIDemo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <Style x:Key ="buttonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Gold" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property= "FontSize" Value="18" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button1" Grid.Column="0" Grid.Row="0"> Button 1</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button2" Grid.Column="1" Grid.Row="0">Button 2</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button3" Grid.Column="2" Grid.Row="0">Button 3</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button4" Grid.Column="0" Grid.Row="1">Button 4</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button5" Grid.Column="1" Grid.Row="1">Button 5</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button6" Grid.Column="2" Grid.Row="1">Button 6</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button7" Grid.Column="0" Grid.Row="2">Button 7</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button8" Grid.Column="1" Grid.Row="2">Button 8</Button>
+        <Button Style ="{StaticResource buttonStyle}" Name="Button9" Grid.Column="2" Grid.Row="2">Button 9</Button>
+
+    </Grid>
+</Window>
