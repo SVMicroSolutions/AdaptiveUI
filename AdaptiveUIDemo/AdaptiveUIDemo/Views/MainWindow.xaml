@@ -47,6 +47,9 @@
             <ComboBox x:Name="userName"
                       ItemsSource="{Binding Users}"
                       SelectedItem="{Binding CurrentUser}"/>
+            <ComboBox x:Name="selectedAlgo"
+                      ItemsSource="{Binding Algorithms}"
+                      SelectedItem="{Binding CurrentAlgo}"/>
             <Button x:Name="go" Content="Go"
 					Command="{Binding BtnClick}"
 					CommandParameter="Go Button"
