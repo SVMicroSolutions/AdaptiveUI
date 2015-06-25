@@ -28,6 +28,8 @@ namespace AdaptiveUIDemo.ViewModel
         public ICommand LoadDataClick { get; set; }
         public ICommand SaveDataClick { get; set; }
 
+        public ICommand ResetDataClick { get; set; }
+
         public List<string> Users { get; }
 
         public string CurrentUser { get; set; }
@@ -52,9 +54,9 @@ namespace AdaptiveUIDemo.ViewModel
         
         public IAlgorithm CurrentAlgo { get; set; }
          
-        public ObservableCollection<Interfaces.IData> OrderedControls { get; }
+        public ObservableCollection<Interfaces.IData> OrderedControls { get;}
 
-        private List<IData> DataList { get; }
+        private List<IData> DataList { get;}
 		#endregion
 
         #region PopulateAlgorthim(s)
@@ -73,45 +75,81 @@ namespace AdaptiveUIDemo.ViewModel
         #endregion
 
 		public AdaptiveUIViewModel()
-		{
+        {
             AppName = "Adaptive UI Rocks!";
             PopulateAlgorthims();
-			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
+            BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
             CurrentUser = Users[0];
             DataList = new List<IData>();
-		    OrderedControls = new ObservableCollection<Interfaces.IData>
-		    {
-		        new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
+            OrderedControls = new ObservableCollection<Interfaces.IData>
+            {
+                new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
                 new DataPoint("Button 4"), new DataPoint("Button 5"), new DataPoint("Button 6"),
                 new DataPoint("Button 7"), new DataPoint("Button 8"), new DataPoint("Button 9")
             };
-		    foreach (var c in OrderedControls)
-		    {
+            foreach (var c in OrderedControls)
+            {
                 DataList.Add(c);
                 foreach (var algo in Algorithms)
                 {
                     algo.Learn(c);
 
                 }
-		    }
+            }
 
-    
         }
 
-		private void ExecuteBtnClick(object obj)
+        private void ExecuteBtnClick(object obj)
 		{
 			string param = (string)obj;
 			if (string.Compare(param, "Go Button") == 0)
 				ProcessGoButton();
-			if (string.Compare(param, "Load Data") == 0)
+			else if (string.Compare(param, "Load Data") == 0)
 				ExecuteLoadData();
-			if (string.Compare(param, "Save Button") == 0)
+			else if (string.Compare(param, "Save Button") == 0)
 				ExecuteSaveData();
-			else
+            else if (string.Compare(param, "Reset Data") == 0)
+                ExecuteResetData();
+            else
 				ProcessNumberButton(param);
 		}
 
+        private void ExecuteResetData()
+        {
+            // Reset the persisted data 
+            DataList.Clear();
+            OrderedControls.Clear();
+            // Reset the algorithms 
+            foreach (var algo in Algorithms)
+            {
+                algo.Reset();
+            }
+            //Add the Orginal Data list of controls to algorthim and save data
+            PopulateUI();
+        }
+        private void PopulateUI()
+        {
+            OrderedControls.Add(new DataPoint("Button 1"));
+            OrderedControls.Add(new DataPoint("Button 2"));
+            OrderedControls.Add(new DataPoint("Button 3"));
+            OrderedControls.Add(new DataPoint("Button 4"));
+            OrderedControls.Add(new DataPoint("Button 5"));
+            OrderedControls.Add(new DataPoint("Button 6"));
+            OrderedControls.Add(new DataPoint("Button 7"));
+            OrderedControls.Add(new DataPoint("Button 8"));
+            OrderedControls.Add(new DataPoint("Button 9"));
+
+            foreach (var c in OrderedControls)
+            {
+                DataList.Add(c);
+                foreach (var algo in Algorithms)
+                {
+                    algo.Learn(c);
+
+                }
+            }
+        }
         private void ExecuteLoadData()
         {
 			PersistData loader = new PersistData();
@@ -150,5 +188,6 @@ namespace AdaptiveUIDemo.ViewModel
             DataList.Add(dp);
 		}
 
-	}
+
+    }
 }
