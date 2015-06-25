@@ -71,7 +71,7 @@
     </Compile>
     <Compile Include="Data\DataPersistance.cs" />
     <Compile Include="Data\DataPoint.cs" />
-    <Compile Include="Data\PesistData.cs" />
+    <Compile Include="Data\PersistData.cs" />
     <Compile Include="Interfaces\IDataPersistance.cs" />
     <Compile Include="Interfaces\IAlgorithm.cs" />
     <Compile Include="Interfaces\IData.cs" />

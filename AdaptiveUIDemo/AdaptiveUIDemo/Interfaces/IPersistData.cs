@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdaptiveUIDemo.Interfaces
 {
-    interface IPersistData
+    public interface IPersistData
     {
         DataPersistance LoadData();
 
