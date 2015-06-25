@@ -2,9 +2,6 @@
 using AdaptiveUIDemo.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AdaptiveUIDemo.ViewModel
@@ -52,37 +49,58 @@ namespace AdaptiveUIDemo.ViewModel
 
 		public AdaptiveUIViewModel()
 		{
-            _learner = new DumbAlgorithm();
-            AppName = "Adaptive UI Rocks!";
+			_learner = new DumbAlgorithm();
+			AppName = "Adaptive UI Rocks!";
 			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
-            LoadDataClick = new CommandExecutor(new Action<object>(ExecuteLoadData));
-            SaveDataClick = new CommandExecutor(new Action<object>(ExecuteSaveData));
-            Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
-            CurrentUser = Users[0];
-        }
+			Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
+			CurrentUser = Users[0];
+
+			// pre load all the controls so when sorted we will have a complete list.
+			for (int i = 1; i <= 9; i++)
+			{
+				var buttonName = string.Format("Button {0}", i);
+				var dta = new DataPoint(buttonName);
+				_learner.Learn(dta);
+			}
+			_sortedControlData = new List<Interfaces.IData>();
+		}
 
 		private void ExecuteBtnClick(object obj)
 		{
 			string param = (string)obj;
 			if (string.Compare(param, "Go Button") == 0)
 				ProcessGoButton();
+			if (string.Compare(param, "Load Data") == 0)
+				ExecuteLoadData();
+			if (string.Compare(param, "Save Button") == 0)
+				ExecuteSaveData();
 			else
 				ProcessNumberButton(param);
 		}
 
-        private void ExecuteLoadData(object obj)
+        private void ExecuteLoadData()
         {
-            
+			PersistData loader = new PersistData();
+			loader.LoadData(CurrentUser);
         }
 
-        private void ExecuteSaveData(object obj)
+        private void ExecuteSaveData()
         {
+			if (_sortedControlData.Count == 0)
+				ProcessGoButton();
 
+			DataPersistance persistanceData = new DataPersistance();
+			persistanceData.UserName = CurrentUser;
+			foreach (Interfaces.IData dta in _sortedControlData)
+				persistanceData.Data.Add((DataPoint)dta);
+
+			var persistData = new PersistData();
+			persistData.SaveData(persistanceData);
         }
         private void ProcessGoButton()
 		{
 			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
-            _learner.OrderControls();
+			_sortedControlData = _learner.OrderControls();
 
             // TODO do something useful
         }
@@ -95,6 +113,8 @@ namespace AdaptiveUIDemo.ViewModel
 
 			// TODO process the button information.
 		}
+
+		private List<Interfaces.IData> _sortedControlData;
 
 	}
 }

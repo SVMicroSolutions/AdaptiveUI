@@ -30,7 +30,7 @@ namespace AlgorithmTests
             persistData.SaveData(dataPersistance);
 
             // load the data
-            var loadedData = persistData.LoadData();
+            var loadedData = persistData.LoadData("Sean");
 
             Assert.IsTrue(dataPersistance.Equals(loadedData), "Unable to save data correctly");
         }

@@ -9,7 +9,7 @@ namespace AdaptiveUIDemo.Interfaces
 {
     public interface IPersistData
     {
-        DataPersistance LoadData();
+        DataPersistance LoadData(string userName);
 
         void SaveData(DataPersistance data);
     }
