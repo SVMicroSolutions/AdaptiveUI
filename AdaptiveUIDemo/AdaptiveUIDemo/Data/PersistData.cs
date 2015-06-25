@@ -17,6 +17,7 @@ namespace AdaptiveUIDemo.Data
             {
                 JsonSerializer serializer = new JsonSerializer();
                 DataPersistance data = (DataPersistance)serializer.Deserialize(file, typeof(DataPersistance));
+               
                 return data;
             }
 

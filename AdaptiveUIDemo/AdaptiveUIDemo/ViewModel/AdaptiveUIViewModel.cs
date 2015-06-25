@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AdaptiveUIDemo.Interfaces;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace AdaptiveUIDemo.ViewModel
 {
@@ -17,7 +19,8 @@ namespace AdaptiveUIDemo.ViewModel
 		private string appName = String.Empty;
         private DumbAlgorithm _learner;
 		private ICommand _btnClickVal;
-		public ICommand BtnClick
+        private DataPersistance _data;
+        public ICommand BtnClick
 		{
 			get
 			{
@@ -84,11 +87,28 @@ namespace AdaptiveUIDemo.ViewModel
 				ProcessNumberButton(param);
 		}
 
+
         private void ExecuteLoadData(object obj)
         {
-            
-        }
+            System.Diagnostics.Debug.WriteLine("Load Data has been clicked.");
 
+
+            DataPersistance persistenceData = new DataPersistance();
+            persistenceData.UserName = CurrentUser;
+            PersistData data = new PersistData();
+            var loadedData = data.LoadData();
+            if (loadedData.UserName == CurrentUser)
+            {
+                foreach (var c in loadedData.Data)
+                {
+                    ProcessNumberButton(c.ControlName);
+                }
+            }
+                
+
+
+
+        }
         private void ExecuteSaveData(object obj)
         {
 
