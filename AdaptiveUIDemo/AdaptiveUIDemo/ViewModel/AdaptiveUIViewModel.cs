@@ -2,12 +2,9 @@
 using AdaptiveUIDemo.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using AdaptiveUIDemo.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace AdaptiveUIDemo.ViewModel
 {
@@ -55,8 +52,8 @@ namespace AdaptiveUIDemo.ViewModel
         
         public IAlgorithm CurrentAlgo { get; set; }
          
-        public ObservableCollection<IData> OrderedControls { get; }
-        #endregion
+        public ObservableCollection<Interfaces.IData> OrderedControls { get; }
+		#endregion
 
         #region PopulateAlgorthim(s)
         /// <summary>
@@ -73,16 +70,14 @@ namespace AdaptiveUIDemo.ViewModel
         }
         #endregion
 
-        public AdaptiveUIViewModel()
+		public AdaptiveUIViewModel()
 		{
             AppName = "Adaptive UI Rocks!";
             PopulateAlgorthims();
-            BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
-            LoadDataClick = new CommandExecutor(new Action<object>(ExecuteLoadData));
-            SaveDataClick = new CommandExecutor(new Action<object>(ExecuteSaveData));
+			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
             CurrentUser = Users[0];
-		    OrderedControls = new ObservableCollection<IData>
+		    OrderedControls = new ObservableCollection<Interfaces.IData>
 		    {
 		        new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
                 new DataPoint("Button 4"), new DataPoint("Button 5"), new DataPoint("Button 6"),
@@ -97,25 +92,37 @@ namespace AdaptiveUIDemo.ViewModel
 		    }
 
     
-		}
+        }
 
-        private void ExecuteBtnClick(object obj)
+		private void ExecuteBtnClick(object obj)
 		{
 			string param = (string)obj;
 			if (string.Compare(param, "Go Button") == 0)
 				ProcessGoButton();
+			if (string.Compare(param, "Load Data") == 0)
+				ExecuteLoadData();
+			if (string.Compare(param, "Save Button") == 0)
+				ExecuteSaveData();
 			else
 				ProcessNumberButton(param);
 		}
 
-        private void ExecuteLoadData(object obj)
+        private void ExecuteLoadData()
         {
-            
+			PersistData loader = new PersistData();
+			loader.LoadData(CurrentUser);
         }
 
-        private void ExecuteSaveData(object obj)
+        private void ExecuteSaveData()
         {
 
+			DataPersistance persistanceData = new DataPersistance();
+			persistanceData.UserName = CurrentUser;
+			foreach (Interfaces.IData dta in OrderedControls)
+				persistanceData.Data.Add((DataPoint)dta);
+
+			var persistData = new PersistData();
+			persistData.SaveData(persistanceData);
         }
         private void ProcessGoButton()
 		{
