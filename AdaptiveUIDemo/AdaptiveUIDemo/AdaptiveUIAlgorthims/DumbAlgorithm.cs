@@ -34,6 +34,10 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
         {
             return new List<IData>(_hitCounts.OrderByDescending(kvp => kvp.Value).Select(kvp => kvp.Key));
         }
+        public override string ToString()
+        {
+            return this.AlgorithmName;
+        }
 
         protected Dictionary<IData, int> HitCountData { get { return _hitCounts; } }
 

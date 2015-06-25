@@ -15,7 +15,7 @@ namespace AdaptiveUIDemo.ViewModel
 	{
 		#region Properties 
 		private string appName = String.Empty;
-        private DumbAlgorithm _learner;
+        //private DumbAlgorithm _learner;
 		private ICommand _btnClickVal;
 		public ICommand BtnClick
 		{
@@ -51,14 +51,32 @@ namespace AdaptiveUIDemo.ViewModel
 			}
 		}
 
+        public List<IAlgorithm> Algorithms{ get; set; }
+        
+        public IAlgorithm CurrentAlgo { get; set; }
+         
         public ObservableCollection<IData> OrderedControls { get; }
-		#endregion
+        #endregion
 
-		public AdaptiveUIViewModel()
+        #region PopulateAlgorthim(s)
+        /// <summary>
+        ///  Add your algorithm to this list to have it picked up.
+        /// </summary>
+        private void PopulateAlgorthims()
+        {
+            Algorithms = new List<IAlgorithm>();
+            Algorithms.Add(new DumbAlgorithm());
+            Algorithms.Add(new BoundedLearner());
+            Algorithms.Add(new SeanAlgorithm());
+            CurrentAlgo = Algorithms[0];
+        }
+        #endregion
+
+        public AdaptiveUIViewModel()
 		{
-            _learner = new DumbAlgorithm();
             AppName = "Adaptive UI Rocks!";
-			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
+            PopulateAlgorthims();
+            BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
             LoadDataClick = new CommandExecutor(new Action<object>(ExecuteLoadData));
             SaveDataClick = new CommandExecutor(new Action<object>(ExecuteSaveData));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
@@ -71,11 +89,13 @@ namespace AdaptiveUIDemo.ViewModel
             };
 		    foreach (var c in OrderedControls)
 		    {
-		        _learner.Learn(c);
+		        CurrentAlgo.Learn(c);
 		    }
+
+    
 		}
 
-		private void ExecuteBtnClick(object obj)
+        private void ExecuteBtnClick(object obj)
 		{
 			string param = (string)obj;
 			if (string.Compare(param, "Go Button") == 0)
@@ -96,7 +116,7 @@ namespace AdaptiveUIDemo.ViewModel
         private void ProcessGoButton()
 		{
 			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
-            var controls = _learner.OrderControls();
+            var controls = CurrentAlgo.OrderControls();
             OrderedControls.Clear();
             foreach (var c in controls)
             {
@@ -110,7 +130,7 @@ namespace AdaptiveUIDemo.ViewModel
 		{
 			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
 
-            _learner.Learn(new DataPoint (param));
+            CurrentAlgo.Learn(new DataPoint (param));
             
 
 			// TODO process the button information.
