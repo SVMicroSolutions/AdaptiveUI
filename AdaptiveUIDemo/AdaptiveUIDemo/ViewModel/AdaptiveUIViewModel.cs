@@ -68,6 +68,7 @@ namespace AdaptiveUIDemo.ViewModel
             Algorithms.Add(new DumbAlgorithm());
             Algorithms.Add(new BoundedLearner());
             Algorithms.Add(new SeanAlgorithm());
+            Algorithms.Add(new ForgetfulLearner());
             CurrentAlgo = Algorithms[0];
         }
         #endregion
