@@ -13,7 +13,7 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
         public DumbAlgorithm(string name)
         {
             AlgorithmName = name;
-            _hitCounts = new Dictionary<IData, int>();
+            _hitCounts = new Dictionary<IData, double>();
         }
 
         public string AlgorithmName { get; }
@@ -39,8 +39,8 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
             return this.AlgorithmName;
         }
 
-        protected Dictionary<IData, int> HitCountData { get { return _hitCounts; } }
+        protected Dictionary<IData, double> HitCountData { get { return _hitCounts; } }
 
-        private readonly Dictionary<IData, int> _hitCounts;
+        private readonly Dictionary<IData, double> _hitCounts;
     }
 }
