@@ -18,5 +18,15 @@ namespace AdaptiveUIDemo.Data
         public string ControlName { get; set; }
 
         public DateTime TimeOfInteraction { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return ((IData)obj).ControlName.Equals(ControlName);
+        }
+
+        public override int GetHashCode()
+        {
+            return ControlName.GetHashCode();
+        }
     }
 }

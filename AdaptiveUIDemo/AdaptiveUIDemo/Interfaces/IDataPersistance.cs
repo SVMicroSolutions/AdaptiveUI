@@ -1,12 +1,18 @@
-﻿using System;
-
+﻿using AdaptiveUIDemo.Data;
+using System;
+using System.Collections.Generic;
 
 namespace AdaptiveUIDemo.Interfaces
 {
-    interface IDataPersistance
+    public interface IDataPersistance
     {
-        void SaveData();
-        void LoadData(); 
-        
+        List<DataPoint> Data { get; set; }
+
+        string UserName { get; set; }
+
+        bool Active { get; set; }
+
+        DateTime CreatedDate { get; set; }
+
     }
 }
