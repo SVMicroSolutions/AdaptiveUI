@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AdaptiveUIDemo.AdaptiveUIAlgorthims;
+using AdaptiveUIDemo.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ namespace AdaptiveUIDemo.ViewModel
 	{
 		#region Properties 
 		private string appName = String.Empty;
-
+        private DumbAlgorithm _learner;
 		private ICommand _btnClickVal;
 		public ICommand BtnClick
 		{
@@ -24,6 +26,10 @@ namespace AdaptiveUIDemo.ViewModel
 				_btnClickVal = value;
 			}
 		}
+
+        public List<string> Users { get; }
+
+        public string CurrentUser { get; set; }
 
 		public string AppName
 		{
@@ -44,9 +50,12 @@ namespace AdaptiveUIDemo.ViewModel
 
 		public AdaptiveUIViewModel()
 		{
-			AppName = "Adaptive UI Rocks!";
+            _learner = new DumbAlgorithm();
+            AppName = "Adaptive UI Rocks!";
 			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
-		}
+            Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
+            CurrentUser = Users[0];
+        }
 
 		private void ExecuteBtnClick(object obj)
 		{
@@ -60,13 +69,16 @@ namespace AdaptiveUIDemo.ViewModel
 		private void ProcessGoButton()
 		{
 			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
+            _learner.OrderControls();
 
-			// TODO do something useful
-		}
+            // TODO do something useful
+        }
 
 		private void ProcessNumberButton(string param)
 		{
 			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
+
+            _learner.Learn(new DataPoint (param));
 
 			// TODO process the button information.
 		}
