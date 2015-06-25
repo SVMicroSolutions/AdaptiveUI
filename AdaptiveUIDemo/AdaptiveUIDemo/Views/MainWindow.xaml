@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdaptiveUIDemo"
         xmlns:ViewModel="clr-namespace:AdaptiveUIDemo.ViewModel" x:Class="AdaptiveUIDemo.MainWindow"
         mc:Ignorable="d"
-        Title="{Binding Path=AppName}" Height="190" Width="525">
+        Title="{Binding Path=AppName}" Height="264.686" Width="327.301">
     <Window.Resources>
         <Style x:Key ="buttonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Gold" />
@@ -18,23 +18,12 @@
 
         <DataTemplate x:Key="BasicDataPointTemplate">
             <Button Content="{Binding ControlName}"
+                    Style="{StaticResource buttonStyle}"
                             Command="{Binding DataContext.BtnClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
 					        CommandParameter="{Binding ControlName}" />
         </DataTemplate>
     </Window.Resources>
-    <StackPanel Margin="0,0,0.4,-21" RenderTransformOrigin="0.496,0.653" Height="172" VerticalAlignment="Top">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <StackPanel VerticalAlignment="Top">
             <ListView ItemsSource="{Binding OrderedControls}"
                       Grid.Row="0"
                       Grid.RowSpan="3"
@@ -53,19 +42,25 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
-            <Button x:Name="go" Grid.Column="2" Grid.Row="3" Content="Go"
+        <UniformGrid >
+
+            <ComboBox x:Name="userName"
+                      ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding CurrentUser}"/>
+            <Button x:Name="go" Content="Go"
 					Command="{Binding BtnClick}"
 					CommandParameter="Go Button"
 					/>
-            <ComboBox x:Name="userName"
-					  Grid.Column="0"
-					  Grid.Row="4"
-                      ItemsSource="{Binding Users}"
-                      SelectedItem="{Binding CurrentUser}"/>
-        </Grid>
-        <!--
-				<Button Command="{Binding BtnClick}" x:Name="go Original" Content="Go" Height="29"   Margin="222,0,225.4,0"  CommandParameter="Go Button" RenderTransformOrigin="3.309,0.661"
-					Grid.Column ="2" Grid.Row ="3"/>
--->
+        </UniformGrid>
+        <UniformGrid >
+            <Button x:Name="loadDataButton" Content="LoadData"
+        		Command="{Binding BtnClick}"
+        		CommandParameter="Load Data"
+					/>
+            <Button x:Name="saveDataButton" Content="SaveData" 
+        		Command="{Binding BtnClick}"
+        		CommandParameter="Save Button"
+					/>
+        </UniformGrid>
     </StackPanel>
 </Window>
