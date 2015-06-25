@@ -6,79 +6,87 @@
         xmlns:local="clr-namespace:AdaptiveUIDemo"
         xmlns:ViewModel="clr-namespace:AdaptiveUIDemo.ViewModel" x:Class="AdaptiveUIDemo.MainWindow"
         mc:Ignorable="d"
-        Title="{Binding Path=AppName}" Height="190" Width="525">
-	<Window.Resources>
-		<Style x:Key ="buttonStyle" TargetType="{x:Type Button}">
-			<Setter Property="Background" Value="Gold" />
-			<Setter Property="FontStyle" Value="Italic" />
-			<Setter Property="Padding" Value="8,4" />
-			<Setter Property= "FontSize" Value="18" />
-			<Setter Property="Margin" Value="4" />
-		</Style>
-	</Window.Resources>
-	<StackPanel Margin="0,0,0.4,-21" RenderTransformOrigin="0.496,0.653" Height="172" VerticalAlignment="Top">
+        Title="{Binding Path=AppName}" Height="239" Width="525">
+    <Window.Resources>
+        <Style x:Key ="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Gold" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property= "FontSize" Value="18" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
+    </Window.Resources>
+    <StackPanel Margin="0,0,0,-79.5">
 
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button1" Grid.Column="0" Grid.Row="0" Content="Button 1"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button1" Grid.Column="0" Grid.Row="0" Content="Button 1"
 					Command="{Binding BtnClick}"
 					CommandParameter="Button 1"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button2" Grid.Column="1" Grid.Row="0" Content="Button 2"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button2" Grid.Column="1" Grid.Row="0" Content="Button 2"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 2"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button3" Grid.Column="2" Grid.Row="0" Content="Button 3"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button3" Grid.Column="2" Grid.Row="0" Content="Button 3"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 3"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button4" Grid.Column="0" Grid.Row="1" Content="Button 4"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button4" Grid.Column="0" Grid.Row="1" Content="Button 4"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 4"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button5" Grid.Column="1" Grid.Row="1" Content="Button 5"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button5" Grid.Column="1" Grid.Row="1" Content="Button 5"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 5"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button6" Grid.Column="2" Grid.Row="1" Content="Button 6"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button6" Grid.Column="2" Grid.Row="1" Content="Button 6"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 6"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button7" Grid.Column="0" Grid.Row="2" Content="Button 7"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button7" Grid.Column="0" Grid.Row="2" Content="Button 7"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 7"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button8" Grid.Column="1" Grid.Row="2" Content="Button 8"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button8" Grid.Column="1" Grid.Row="2" Content="Button 8"
 			Command="{Binding BtnClick}"
 					CommandParameter="Button 8"
 					/>
-			<Button Style ="{StaticResource buttonStyle}" x:Name="Button9" Grid.Column="2" Grid.Row="2" Content="Button 9"
+            <Button Style ="{StaticResource buttonStyle}" x:Name="Button9" Grid.Column="2" Grid.Row="2" Content="Button 9"
 					Command="{Binding BtnClick}"
 					CommandParameter="Button 9"
 					/>
-			<Button x:Name="go" Grid.Column="2" Grid.Row="3" Content="Go"
+
+        </Grid>
+        <UniformGrid >
+
+            <ComboBox x:Name="userName"
+                      ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding CurrentUser}"/>
+            <Button x:Name="go" Content="Go"
 					Command="{Binding BtnClick}"
 					CommandParameter="Go Button"
 					/>
-            <ComboBox x:Name="userName"
-					  Grid.Column="0"
-					  Grid.Row="4"
-                      ItemsSource="{Binding Users}"
-                      SelectedItem="{Binding CurrentUser}"/>
-        </Grid>
-		<!--
-				<Button Command="{Binding BtnClick}" x:Name="go Original" Content="Go" Height="29"   Margin="222,0,225.4,0"  CommandParameter="Go Button" RenderTransformOrigin="3.309,0.661"
-					Grid.Column ="2" Grid.Row ="3"/>
--->
-	</StackPanel>
+        </UniformGrid>
+        <UniformGrid >
+            <Button x:Name="loadDataButton" Content="LoadData"
+        		Command="{Binding BtnClick}"
+        		CommandParameter="Load Data"
+					/>
+            <Button x:Name="saveDataButton" Content="SaveData" 
+        		Command="{Binding BtnClick}"
+        		CommandParameter="Save Button"
+					/>
+        </UniformGrid>
+
+    </StackPanel>
 </Window>
