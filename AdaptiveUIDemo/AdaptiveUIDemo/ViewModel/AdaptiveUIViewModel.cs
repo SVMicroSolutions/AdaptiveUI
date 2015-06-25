@@ -27,7 +27,9 @@ namespace AdaptiveUIDemo.ViewModel
 			{
 				_btnClickVal = value;
 			}
-		}
+		}        
+        public ICommand LoadDataClick { get; set; }
+        public ICommand SaveDataClick { get; set; }
 
         public List<string> Users { get; }
 
@@ -57,6 +59,8 @@ namespace AdaptiveUIDemo.ViewModel
             _learner = new DumbAlgorithm();
             AppName = "Adaptive UI Rocks!";
 			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
+            LoadDataClick = new CommandExecutor(new Action<object>(ExecuteLoadData));
+            SaveDataClick = new CommandExecutor(new Action<object>(ExecuteSaveData));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
             CurrentUser = Users[0];
 		    OrderedControls = new ObservableCollection<IData>
@@ -80,7 +84,16 @@ namespace AdaptiveUIDemo.ViewModel
 				ProcessNumberButton(param);
 		}
 
-		private void ProcessGoButton()
+        private void ExecuteLoadData(object obj)
+        {
+            
+        }
+
+        private void ExecuteSaveData(object obj)
+        {
+
+        }
+        private void ProcessGoButton()
 		{
 			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
             var controls = _learner.OrderControls();
