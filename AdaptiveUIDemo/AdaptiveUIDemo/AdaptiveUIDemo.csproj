@@ -66,6 +66,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\DataPoint.cs" />
+    <Compile Include="Interfaces\IDataPersistance.cs" />
     <Compile Include="Interfaces\IAlgorithm.cs" />
     <Compile Include="Interfaces\IData.cs" />
     <Compile Include="ViewModel\AdaptiveUIViewModel.cs" />
