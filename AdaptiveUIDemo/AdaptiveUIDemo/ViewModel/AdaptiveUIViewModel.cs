@@ -53,6 +53,8 @@ namespace AdaptiveUIDemo.ViewModel
         public IAlgorithm CurrentAlgo { get; set; }
          
         public ObservableCollection<Interfaces.IData> OrderedControls { get; }
+
+        private List<IData> DataList { get; }
 		#endregion
 
         #region PopulateAlgorthim(s)
@@ -77,6 +79,7 @@ namespace AdaptiveUIDemo.ViewModel
 			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
             CurrentUser = Users[0];
+            DataList = new List<IData>();
 		    OrderedControls = new ObservableCollection<Interfaces.IData>
 		    {
 		        new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
@@ -85,9 +88,11 @@ namespace AdaptiveUIDemo.ViewModel
             };
 		    foreach (var c in OrderedControls)
 		    {
+                DataList.Add(c);
                 foreach (var algo in Algorithms)
                 {
                     algo.Learn(c);
+
                 }
 		    }
 
@@ -118,9 +123,10 @@ namespace AdaptiveUIDemo.ViewModel
 
 			DataPersistance persistanceData = new DataPersistance();
 			persistanceData.UserName = CurrentUser;
-			foreach (Interfaces.IData dta in OrderedControls)
-				persistanceData.Data.Add((DataPoint)dta);
-
+            foreach (IData dta in DataList)
+            {
+                persistanceData.Data.Add((DataPoint)dta);
+            }
 			var persistData = new PersistData();
 			persistData.SaveData(persistanceData);
         }
@@ -133,18 +139,15 @@ namespace AdaptiveUIDemo.ViewModel
             {
                 OrderedControls.Add(c);
             }
-
-            // TODO do something useful
         }
 
 		private void ProcessNumberButton(string param)
 		{
 			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
 
-            CurrentAlgo.Learn(new DataPoint (param));
-            
-
-			// TODO process the button information.
+            var dp = new DataPoint(param);
+            CurrentAlgo.Learn(dp);
+            DataList.Add(dp);
 		}
 
 	}
