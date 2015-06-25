@@ -1,5 +1,4 @@
 ﻿using AdaptiveUIDemo.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,9 +16,9 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
             _hitCounts = new Dictionary<IData, int>();
         }
 
-        public string AlgorithmName { get; private set; }
+        public string AlgorithmName { get; }
 
-        public void Learn(IData dataPoint)
+        public virtual void Learn(IData dataPoint)
         {
             if (!_hitCounts.ContainsKey(dataPoint))
             {
@@ -31,11 +30,13 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
             }
         }
 
-        public List<IData> OrderControls()
+        public virtual List<IData> OrderControls()
         {
             return new List<IData>(_hitCounts.OrderByDescending(kvp => kvp.Value).Select(kvp => kvp.Key));
         }
 
-        private Dictionary<IData, int> _hitCounts;
+        protected Dictionary<IData, int> HitCountData { get { return _hitCounts; } }
+
+        private readonly Dictionary<IData, int> _hitCounts;
     }
 }
