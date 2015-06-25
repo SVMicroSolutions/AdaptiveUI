@@ -64,6 +64,9 @@
         		Command="{Binding BtnClick}"
         		CommandParameter="Save Button"
 					/>
+            <Button x:Name="resetDataButton" Content="ResetData" 
+        		Command="{Binding ResetData}"
+					/>
         </UniformGrid>
     </StackPanel>
 </Window>
