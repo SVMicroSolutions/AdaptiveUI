@@ -14,6 +14,10 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
             : base("Icarus")
         {}
 
+        public BoundedLearner(string name)
+            : base(name)
+        {}
+
         public override List<IData> OrderControls()
         {
             return new List<IData>(HitCountData.OrderByDescending(kvp => CalculateRank(kvp.Value)).Select(kvp => kvp.Key));
@@ -26,7 +30,7 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
         /// </summary>
         /// <param name="hitCount"></param>
         /// <returns></returns>
-        protected double CalculateRank(int hitCount)
+        protected double CalculateRank(double hitCount)
         {
             return 1.0 / (1.0 + Math.Exp(-1 * LEARNING_RATE * (hitCount - SHIFT_TO_ZERO)));
         }
