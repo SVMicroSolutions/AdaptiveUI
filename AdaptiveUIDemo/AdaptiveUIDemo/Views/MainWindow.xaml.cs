@@ -25,6 +25,7 @@ namespace AdaptiveUIDemo
         {
             InitializeComponent();
             this.DataContext = new AdaptiveUIViewModel();
+            
         }
     }
 }

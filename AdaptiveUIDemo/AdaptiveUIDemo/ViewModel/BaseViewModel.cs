@@ -12,7 +12,7 @@ namespace AdaptiveUIDemo.ViewModel
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string caller = "")
+        public void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
             if (PropertyChanged != null)
             {
