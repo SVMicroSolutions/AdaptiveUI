@@ -6,32 +6,30 @@
         xmlns:local="clr-namespace:AdaptiveUIDemo"
         xmlns:ViewModel="clr-namespace:AdaptiveUIDemo.ViewModel" x:Class="AdaptiveUIDemo.MainWindow"
         mc:Ignorable="d"
-        Title="{Binding Path=AppName}" Height="350" Width="525">
-    <Window.Resources>
-        <Style x:Key ="buttonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Gold" />
-            <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="Padding" Value="8,4" />
-            <Setter Property= "FontSize" Value="18" />
-            <Setter Property="Margin" Value="4" />
-        </Style>
-    </Window.Resources>
-    <StackPanel Margin="0,0,0.4,119.8">
+        Title="{Binding Path=AppName}" Height="190" Width="525">
+	<Window.Resources>
+		<Style x:Key ="buttonStyle" TargetType="{x:Type Button}">
+			<Setter Property="Background" Value="Gold" />
+			<Setter Property="FontStyle" Value="Italic" />
+			<Setter Property="Padding" Value="8,4" />
+			<Setter Property= "FontSize" Value="18" />
+			<Setter Property="Margin" Value="4" />
+		</Style>
+	</Window.Resources>
+	<StackPanel Margin="0,0,0.4,-21" RenderTransformOrigin="0.496,0.653" Height="172" VerticalAlignment="Top">
 
-
-
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 			<Button Style ="{StaticResource buttonStyle}" x:Name="Button1" Grid.Column="0" Grid.Row="0" Content="Button 1"
 					Command="{Binding BtnClick}"
 					CommandParameter="Button 1"
@@ -68,9 +66,24 @@
 					Command="{Binding BtnClick}"
 					CommandParameter="Button 9"
 					/>
-
+			<Button x:Name="go" Grid.Column="2" Grid.Row="3" Content="Go"
+					Command="{Binding BtnClick}"
+					CommandParameter="Go Button"
+					/>
+			<ComboBox x:Name="userName"
+					  Grid.Column="0"
+					  Grid.Row="4">
+				<ComboBoxItem Tag="Jay" IsSelected="True">Jay</ComboBoxItem>
+				<ComboBoxItem Tag="Sean">Sean</ComboBoxItem>
+				<ComboBoxItem Tag="Enrique">Enrique</ComboBoxItem>
+				<ComboBoxItem Tag="Tom">Tom</ComboBoxItem>
+				<Binding
+				
+			</ComboBox>
 		</Grid>
-		<Button Command="{Binding BtnClick}" x:Name="go" Content="Go" Height="50"   Margin="222,0,225.4,0"  CommandParameter="Go Button"/>
-
+		<!--
+				<Button Command="{Binding BtnClick}" x:Name="go Original" Content="Go" Height="29"   Margin="222,0,225.4,0"  CommandParameter="Go Button" RenderTransformOrigin="3.309,0.661"
+					Grid.Column ="2" Grid.Row ="3"/>
+-->
 	</StackPanel>
 </Window>
