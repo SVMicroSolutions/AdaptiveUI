@@ -90,7 +90,10 @@ namespace AdaptiveUIDemo.ViewModel
             };
 		    foreach (var c in OrderedControls)
 		    {
-		        CurrentAlgo.Learn(c);
+                foreach (var algo in Algorithms)
+                {
+                    algo.Learn(c);
+                }
 		    }
 
     
