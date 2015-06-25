@@ -35,5 +35,7 @@ namespace AdaptiveUIDemo.ViewModel
 
         }
 
+
+
     }
 }
