@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdaptiveUIDemo"
         xmlns:ViewModel="clr-namespace:AdaptiveUIDemo.ViewModel" x:Class="AdaptiveUIDemo.MainWindow"
         mc:Ignorable="d"
-        Title="{Binding Path=AppName}" Height="239" Width="525">
+        Title="{Binding Path=AppName}" Height="264.686" Width="327.301">
     <Window.Resources>
         <Style x:Key ="buttonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Gold" />
@@ -15,63 +15,41 @@
             <Setter Property= "FontSize" Value="18" />
             <Setter Property="Margin" Value="4" />
         </Style>
+
+        <DataTemplate x:Key="BasicDataPointTemplate">
+            <Button Content="{Binding ControlName}"
+                    Style="{StaticResource buttonStyle}"
+                            Command="{Binding DataContext.BtnClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
+					        CommandParameter="{Binding ControlName}" />
+        </DataTemplate>
     </Window.Resources>
-    <StackPanel Margin="0,0,0,-79.5">
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button1" Grid.Column="0" Grid.Row="0" Content="Button 1"
-					Command="{Binding BtnClick}"
-					CommandParameter="Button 1"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button2" Grid.Column="1" Grid.Row="0" Content="Button 2"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 2"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button3" Grid.Column="2" Grid.Row="0" Content="Button 3"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 3"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button4" Grid.Column="0" Grid.Row="1" Content="Button 4"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 4"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button5" Grid.Column="1" Grid.Row="1" Content="Button 5"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 5"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button6" Grid.Column="2" Grid.Row="1" Content="Button 6"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 6"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button7" Grid.Column="0" Grid.Row="2" Content="Button 7"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 7"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button8" Grid.Column="1" Grid.Row="2" Content="Button 8"
-			Command="{Binding BtnClick}"
-					CommandParameter="Button 8"
-					/>
-            <Button Style ="{StaticResource buttonStyle}" x:Name="Button9" Grid.Column="2" Grid.Row="2" Content="Button 9"
-					Command="{Binding BtnClick}"
-					CommandParameter="Button 9"
-					/>
-
-        </Grid>
+    <StackPanel VerticalAlignment="Top">
+            <ListView ItemsSource="{Binding OrderedControls}"
+                      Grid.Row="0"
+                      Grid.RowSpan="3"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      ItemTemplate="{StaticResource BasicDataPointTemplate}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                                    RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                    ItemWidth="{Binding (ListView.View).ItemWidth, 
+                                    RelativeSource={RelativeSource AncestorType=ListView}}"
+                                    MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                                    ItemHeight="{Binding (ListView.View).ItemHeight, 
+                                    RelativeSource={RelativeSource AncestorType=ListView}}" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
         <UniformGrid >
 
             <ComboBox x:Name="userName"
                       ItemsSource="{Binding Users}"
                       SelectedItem="{Binding CurrentUser}"/>
+            <ComboBox x:Name="selectedAlgo"
+                      ItemsSource="{Binding Algorithms}"
+                      SelectedItem="{Binding CurrentAlgo}"/>
             <Button x:Name="go" Content="Go"
 					Command="{Binding BtnClick}"
 					CommandParameter="Go Button"
@@ -87,6 +65,5 @@
         		CommandParameter="Save Button"
 					/>
         </UniformGrid>
-
     </StackPanel>
 </Window>

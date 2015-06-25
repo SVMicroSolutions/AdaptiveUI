@@ -1,5 +1,4 @@
 ﻿using AdaptiveUIDemo.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,12 +13,12 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
         public DumbAlgorithm(string name)
         {
             AlgorithmName = name;
-            _hitCounts = new Dictionary<IData, int>();
+            _hitCounts = new Dictionary<IData, double>();
         }
 
-        public string AlgorithmName { get; private set; }
+        public string AlgorithmName { get; }
 
-        public void Learn(IData dataPoint)
+        public virtual void Learn(IData dataPoint)
         {
             if (!_hitCounts.ContainsKey(dataPoint))
             {
@@ -31,11 +30,17 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
             }
         }
 
-        public List<IData> OrderControls()
+        public virtual List<IData> OrderControls()
         {
             return new List<IData>(_hitCounts.OrderByDescending(kvp => kvp.Value).Select(kvp => kvp.Key));
         }
+        public override string ToString()
+        {
+            return this.AlgorithmName;
+        }
 
-        private Dictionary<IData, int> _hitCounts;
+        protected Dictionary<IData, double> HitCountData { get { return _hitCounts; } }
+
+        private readonly Dictionary<IData, double> _hitCounts;
     }
 }

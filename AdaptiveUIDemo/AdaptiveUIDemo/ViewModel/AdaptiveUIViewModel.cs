@@ -3,6 +3,8 @@ using AdaptiveUIDemo.Data;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using AdaptiveUIDemo.Interfaces;
+using System.Collections;
 
 namespace AdaptiveUIDemo.ViewModel
 {
@@ -10,7 +12,7 @@ namespace AdaptiveUIDemo.ViewModel
 	{
 		#region Properties 
 		private string appName = String.Empty;
-        private DumbAlgorithm _learner;
+        //private DumbAlgorithm _learner;
 		private ICommand _btnClickVal;
 		public ICommand BtnClick
 		{
@@ -45,25 +47,52 @@ namespace AdaptiveUIDemo.ViewModel
 				}
 			}
 		}
+
+        public List<IAlgorithm> Algorithms{ get; set; }
+        
+        public IAlgorithm CurrentAlgo { get; set; }
+         
+        public ObservableCollection<Interfaces.IData> OrderedControls { get; }
 		#endregion
+
+        #region PopulateAlgorthim(s)
+        /// <summary>
+        ///  Add your algorithm to this list to have it picked up.
+        /// </summary>
+        private void PopulateAlgorthims()
+        {
+            Algorithms = new List<IAlgorithm>();
+            Algorithms.Add(new DumbAlgorithm());
+            Algorithms.Add(new BoundedLearner());
+            Algorithms.Add(new SeanAlgorithm());
+            Algorithms.Add(new ForgetfulLearner());
+            CurrentAlgo = Algorithms[0];
+        }
+        #endregion
 
 		public AdaptiveUIViewModel()
 		{
-			_learner = new DumbAlgorithm();
-			AppName = "Adaptive UI Rocks!";
+            AppName = "Adaptive UI Rocks!";
+            PopulateAlgorthims();
 			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
-			Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
-			CurrentUser = Users[0];
+            Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
+            CurrentUser = Users[0];
+		    OrderedControls = new ObservableCollection<Interfaces.IData>
+		    {
+		        new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
+                new DataPoint("Button 4"), new DataPoint("Button 5"), new DataPoint("Button 6"),
+                new DataPoint("Button 7"), new DataPoint("Button 8"), new DataPoint("Button 9")
+            };
+		    foreach (var c in OrderedControls)
+		    {
+                foreach (var algo in Algorithms)
+                {
+                    algo.Learn(c);
+                }
+		    }
 
-			// pre load all the controls so when sorted we will have a complete list.
-			for (int i = 1; i <= 9; i++)
-			{
-				var buttonName = string.Format("Button {0}", i);
-				var dta = new DataPoint(buttonName);
-				_learner.Learn(dta);
-			}
-			_sortedControlData = new List<Interfaces.IData>();
-		}
+    
+        }
 
 		private void ExecuteBtnClick(object obj)
 		{
@@ -86,12 +115,10 @@ namespace AdaptiveUIDemo.ViewModel
 
         private void ExecuteSaveData()
         {
-			if (_sortedControlData.Count == 0)
-				ProcessGoButton();
 
 			DataPersistance persistanceData = new DataPersistance();
 			persistanceData.UserName = CurrentUser;
-			foreach (Interfaces.IData dta in _sortedControlData)
+			foreach (Interfaces.IData dta in OrderedControls)
 				persistanceData.Data.Add((DataPoint)dta);
 
 			var persistData = new PersistData();
@@ -100,7 +127,12 @@ namespace AdaptiveUIDemo.ViewModel
         private void ProcessGoButton()
 		{
 			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
-			_sortedControlData = _learner.OrderControls();
+            var controls = CurrentAlgo.OrderControls();
+            OrderedControls.Clear();
+            foreach (var c in controls)
+            {
+                OrderedControls.Add(c);
+            }
 
             // TODO do something useful
         }
@@ -109,12 +141,11 @@ namespace AdaptiveUIDemo.ViewModel
 		{
 			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
 
-            _learner.Learn(new DataPoint (param));
+            CurrentAlgo.Learn(new DataPoint (param));
+            
 
 			// TODO process the button information.
 		}
-
-		private List<Interfaces.IData> _sortedControlData;
 
 	}
 }

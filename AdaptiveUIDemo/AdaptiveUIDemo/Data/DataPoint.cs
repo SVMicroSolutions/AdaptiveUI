@@ -21,6 +21,7 @@ namespace AdaptiveUIDemo.Data
 
         public override bool Equals(object obj)
         {
+            if (!(obj is IData)) return false;
             return ((IData)obj).ControlName.Equals(ControlName);
         }
 
