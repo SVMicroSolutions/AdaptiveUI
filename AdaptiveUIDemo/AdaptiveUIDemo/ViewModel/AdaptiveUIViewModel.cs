@@ -2,10 +2,12 @@
 using AdaptiveUIDemo.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AdaptiveUIDemo.Interfaces;
 
 namespace AdaptiveUIDemo.ViewModel
 {
@@ -46,6 +48,8 @@ namespace AdaptiveUIDemo.ViewModel
 				}
 			}
 		}
+
+        public ObservableCollection<IData> OrderedControls { get; }
 		#endregion
 
 		public AdaptiveUIViewModel()
@@ -55,7 +59,17 @@ namespace AdaptiveUIDemo.ViewModel
 			BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
             CurrentUser = Users[0];
-        }
+		    OrderedControls = new ObservableCollection<IData>
+		    {
+		        new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
+                new DataPoint("Button 4"), new DataPoint("Button 5"), new DataPoint("Button 6"),
+                new DataPoint("Button 7"), new DataPoint("Button 8"), new DataPoint("Button 9")
+            };
+		    foreach (var c in OrderedControls)
+		    {
+		        _learner.Learn(c);
+		    }
+		}
 
 		private void ExecuteBtnClick(object obj)
 		{
@@ -69,7 +83,12 @@ namespace AdaptiveUIDemo.ViewModel
 		private void ProcessGoButton()
 		{
 			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
-            _learner.OrderControls();
+            var controls = _learner.OrderControls();
+            OrderedControls.Clear();
+            foreach (var c in controls)
+            {
+                OrderedControls.Add(c);
+            }
 
             // TODO do something useful
         }
@@ -79,6 +98,7 @@ namespace AdaptiveUIDemo.ViewModel
 			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
 
             _learner.Learn(new DataPoint (param));
+            
 
 			// TODO process the button information.
 		}

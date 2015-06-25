@@ -18,7 +18,7 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 
         public string AlgorithmName { get; }
 
-        public void Learn(IData dataPoint)
+        public virtual void Learn(IData dataPoint)
         {
             if (!_hitCounts.ContainsKey(dataPoint))
             {

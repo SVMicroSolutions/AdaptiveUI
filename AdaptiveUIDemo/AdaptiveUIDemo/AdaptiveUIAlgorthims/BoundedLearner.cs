@@ -6,7 +6,7 @@ using AdaptiveUIDemo.Interfaces;
 namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 {
     /// <summary>
-    /// The maximum sort rank for a given control will have an upper bound.
+    /// Implements a sigmoid function to impose lower and upper bounds on a control's rank.
     /// </summary>
     public class BoundedLearner : DumbAlgorithm
     {
