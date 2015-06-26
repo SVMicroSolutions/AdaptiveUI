@@ -24,9 +24,8 @@
                     Style="{StaticResource buttonStyle}"
                             Command="{Binding DataContext.BtnClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
 					        CommandParameter="{Binding ControlName}"
-                            />
-            <!-- Width="{Binding Rank, Converter={StaticResource RankToSizeConverter}, ConverterParameter=75}"
-                            Height="{Binding Rank, Converter={StaticResource RankToSizeConverter}, ConverterParameter=75}" -->
+                            Width="{Binding Rank, Converter={StaticResource RankToSizeConverter}, ConverterParameter=150}"
+                            Height="{Binding Rank, Converter={StaticResource RankToSizeConverter}, ConverterParameter=75}"/>
         </DataTemplate>
     </Window.Resources>
     <StackPanel VerticalAlignment="Top">
