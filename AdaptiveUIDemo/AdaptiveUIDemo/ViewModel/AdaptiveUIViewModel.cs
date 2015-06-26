@@ -56,7 +56,8 @@ namespace AdaptiveUIDemo.ViewModel
 				new BoundedLearner(),
 				new SeanAlgorithm(),
 				new ForgetfulLearner(),
-				new TomAlgorithm()
+				new TomAlgorithm() ,
+                new TimeAlgorithm()
 			};
 			CurrentAlgo = Algorithms[0];
 		}
