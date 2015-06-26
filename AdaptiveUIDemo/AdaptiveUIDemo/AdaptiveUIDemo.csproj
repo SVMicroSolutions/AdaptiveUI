@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AdaptiveUIAlgorthims\AverageAlgorithm.cs" />
     <Compile Include="AdaptiveUIAlgorthims\TomAlgorithm.cs" />
     <Compile Include="AdaptiveUIAlgorthims\BoundedLearner.cs" />
     <Compile Include="AdaptiveUIAlgorthims\DumbAlgorithm.cs" />
