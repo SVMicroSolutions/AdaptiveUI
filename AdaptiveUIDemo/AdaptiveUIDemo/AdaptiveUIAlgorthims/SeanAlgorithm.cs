@@ -17,12 +17,33 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
         /// Initializes a new instance of the <see cref="SeanAlgorithm"/> class.
         /// </summary>
         public SeanAlgorithm()
-            : base("AgeBased")
+            : base("AgeBasedAndCount")
         { }
+
+
+        
+        public override void Learn(IData dataPoint)
+        {
+            if (!HitCountData.ContainsKey(dataPoint))
+            {
+                HitCountData[dataPoint] = 1;
+            }
+            else
+            {
+                double oldCount = HitCountData[dataPoint];
+                HitCountData.Remove(dataPoint);
+                HitCountData[dataPoint] = oldCount+=1;
+                
+            }
+        }
 
         public override List<IData> OrderControls()
         {
-            return new List<IData>(HitCountData.OrderByDescending(kvp => CalculateRank(kvp.Value, kvp.Key.TimeOfInteraction)).Select(kvp => kvp.Key));
+            return new List<IData>(HitCountData.Select(kvp =>
+            {
+                kvp.Key.Rank = CalculateRank(kvp.Value, kvp.Key.TimeOfInteraction);
+                return kvp.Key;
+            }).OrderByDescending(data => data.Rank));
         }
 
         /// <summary>
@@ -56,11 +77,13 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
                 y = -1;
             }
 
-            double z = x < 0.0 ? 1 : x;  
-            return Math.Log10(z) + ((y*t) / WeighingFactor);
+            double z = x <= 0.0 ? 1 : x;
+            double rankingValue = (Math.Log(z) + ((y * t) / WeighingFactor));
+            return rankingValue / 10000;
         }
 
-        private const double  WeighingFactor = 60.0; // used to water down presses made futher down 
+        private const double  WeighingFactor = 120.0; // used to water down presses made futher down
+        private const double NormalizationFactor = 10000; // Used to scale down the data   
         private readonly DateTime startingTime = new DateTime(2015, 6, 25);
     }
 }
