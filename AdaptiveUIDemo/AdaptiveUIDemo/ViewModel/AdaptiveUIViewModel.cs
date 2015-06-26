@@ -28,10 +28,6 @@ namespace AdaptiveUIDemo.ViewModel
                 _btnClickVal = value;
             }
         }
-        public ICommand LoadDataClick { get; set; }
-        public ICommand SaveDataClick { get; set; }
-
-        public ICommand ResetDataClick { get; set; }
 
         public List<string> Users { get; }
 
@@ -154,19 +150,6 @@ namespace AdaptiveUIDemo.ViewModel
 
             }
         }
-        //    DataPersistance persistenceData = new DataPersistance();
-        //    persistenceData.UserName = CurrentUser;
-        //    PersistData data = new PersistData();
-        //    var loadedData = data.LoadData();
-        //    if (loadedData.UserName == CurrentUser)
-        //    {
-        //        foreach (var c in loadedData.Data)
-        //        {
-        //            ProcessNumberButton(c.ControlName);
-        //        }
-        //    }
-
-        //}
         private void ExecuteLoadData()
         {
             System.Diagnostics.Debug.WriteLine("Load Data has been clicked.");
