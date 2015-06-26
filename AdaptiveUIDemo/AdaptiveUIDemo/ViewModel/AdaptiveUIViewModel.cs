@@ -184,7 +184,7 @@ namespace AdaptiveUIDemo.ViewModel
 			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
 
             var dp = new DataPoint(param);
-            CurrentAlgo.Learn(dp);
+            Algorithms.ForEach(x => x.Learn(dp));
             DataList.Add(dp);
 		}
 
