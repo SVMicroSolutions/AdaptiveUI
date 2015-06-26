@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using AdaptiveUIDemo.Interfaces;
 
@@ -21,29 +22,35 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 
 		public override List<IData> OrderControls()
 		{
-			var listToReturn = new List<IData>();
+			var retList = new List<IData>();
 
 			// make deep copy of HitCountData so we do not modify the original values.
-			var hitListCopy = HitCountData.ToDictionary(item => item.Key, item => item.Value);
+			var copyOfHitCountData = HitCountData.ToDictionary(item => item.Key, item => item.Value);
 
-			while (hitListCopy.Count > 0)
+			double maxHitsEver = 0;
+			while (copyOfHitCountData.Count > 0)
 			{
-				var indexToMax = 0;
-				double max = 0;
+				double maxHitsWithinLoop = 0;
+				var kvp = new KeyValuePair<IData, double>();
 
-				for (var index = 0; index < hitListCopy.Count; index++)
+				for (var index = 0; index < copyOfHitCountData.Count; index++)
 				{
-					var value = hitListCopy.ElementAt(index).Value;
-					if (!(value > max))
+					var value = copyOfHitCountData.ElementAt(index).Value;
+					if (!(value > maxHitsWithinLoop))
 						continue;
-					max = value;
-					indexToMax = index;
+					maxHitsWithinLoop = value;
+					var indexToMax = index;
+					kvp = copyOfHitCountData.ElementAt(indexToMax);
 				}
-				var item = hitListCopy.ElementAt(indexToMax);
-				hitListCopy.Remove(item.Key);
-				listToReturn.Add(item.Key);
+
+				// ReSharper disable once CompareOfFloatsByEqualityOperator
+				if (maxHitsEver == 0)
+					maxHitsEver = maxHitsWithinLoop;
+				kvp.Key.Rank = kvp.Value / maxHitsEver;
+				copyOfHitCountData.Remove(kvp.Key);
+				retList.Add(kvp.Key);
 			}
-			return listToReturn;
+			return retList;
 		}
 	}
 }
