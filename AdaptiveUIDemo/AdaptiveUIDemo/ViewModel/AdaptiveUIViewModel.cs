@@ -16,7 +16,7 @@ namespace AdaptiveUIDemo.ViewModel
         private string appName = String.Empty;
         //private DumbAlgorithm _learner;
         private ICommand _btnClickVal;
-        private DataPersistance _data;
+//        private DataPersistance _data;
         public ICommand BtnClick
         {
             get
@@ -68,8 +68,9 @@ namespace AdaptiveUIDemo.ViewModel
             Algorithms.Add(new DumbAlgorithm());
             Algorithms.Add(new BoundedLearner());
             Algorithms.Add(new SeanAlgorithm());
-            Algorithms.Add(new ForgetfulLearner());
-            CurrentAlgo = Algorithms[0];
+			Algorithms.Add(new ForgetfulLearner());
+			Algorithms.Add(new TomAlgorithm());
+			CurrentAlgo = Algorithms[0];
         }
         #endregion
 
