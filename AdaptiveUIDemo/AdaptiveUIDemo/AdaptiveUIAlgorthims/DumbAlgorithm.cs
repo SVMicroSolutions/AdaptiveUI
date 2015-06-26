@@ -33,7 +33,12 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 
         public virtual List<IData> OrderControls()
         {
-            return new List<IData>(_hitCounts.OrderByDescending(kvp => kvp.Value).Select(kvp => kvp.Key));
+            var maxHits = _hitCounts.Values.Max();
+            return new List<IData>(HitCountData.Select(kvp =>
+            {
+                kvp.Key.Rank = kvp.Value / maxHits;
+                return kvp.Key;
+            }).OrderByDescending(data => data.Rank));
         }
         public override string ToString()
         {

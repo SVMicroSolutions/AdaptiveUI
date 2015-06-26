@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AdaptiveUIAlgorthims\AverageAlgorithm.cs" />
     <Compile Include="AdaptiveUIAlgorthims\TomAlgorithm.cs" />
     <Compile Include="AdaptiveUIAlgorthims\BoundedLearner.cs" />
     <Compile Include="AdaptiveUIAlgorthims\DumbAlgorithm.cs" />
@@ -73,6 +74,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\RankToSizeConverter.cs" />
     <Compile Include="Data\DataPersistance.cs" />
     <Compile Include="Data\DataPoint.cs" />
     <Compile Include="Data\PersistData.cs" />

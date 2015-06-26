@@ -20,7 +20,11 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 
         public override List<IData> OrderControls()
         {
-            return new List<IData>(HitCountData.OrderByDescending(kvp => CalculateRank(kvp.Value)).Select(kvp => kvp.Key));
+            return new List<IData>(HitCountData.Select(kvp =>
+            {
+                kvp.Key.Rank = CalculateRank(kvp.Value);
+                return kvp.Key;
+            }).OrderByDescending(data => data.Rank));
         }
 
         /// <summary>

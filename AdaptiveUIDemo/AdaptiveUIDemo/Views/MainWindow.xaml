@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdaptiveUIDemo"
+        xmlns:converters="clr-namespace:AdaptiveUIDemo.Converters"
         xmlns:ViewModel="clr-namespace:AdaptiveUIDemo.ViewModel" x:Class="AdaptiveUIDemo.MainWindow"
         mc:Ignorable="d"
         Title="{Binding Path=AppName}" Height="264.686" Width="327.301">
@@ -16,11 +17,15 @@
             <Setter Property="Margin" Value="4" />
         </Style>
 
+        <converters:RankToSizeConverter x:Key="RankToSizeConverter"/>
+        
         <DataTemplate x:Key="BasicDataPointTemplate">
             <Button Content="{Binding ControlName}"
                     Style="{StaticResource buttonStyle}"
                             Command="{Binding DataContext.BtnClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
-					        CommandParameter="{Binding ControlName}" />
+					        CommandParameter="{Binding ControlName}"
+                            Width="{Binding Rank, Converter={StaticResource RankToSizeConverter}, ConverterParameter=150}"
+                            Height="{Binding Rank, Converter={StaticResource RankToSizeConverter}, ConverterParameter=75}"/>
         </DataTemplate>
     </Window.Resources>
     <StackPanel VerticalAlignment="Top">
