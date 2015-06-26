@@ -1,6 +1,7 @@
 ﻿using AdaptiveUIDemo.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 {
@@ -37,6 +38,11 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
         public override string ToString()
         {
             return this.AlgorithmName;
+        }
+
+        public void Reset()
+        {
+            _hitCounts.Clear();
         }
 
         protected Dictionary<IData, double> HitCountData { get { return _hitCounts; } }

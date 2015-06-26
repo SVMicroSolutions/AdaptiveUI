@@ -8,15 +8,19 @@ namespace AdaptiveUIDemo.Data
     public class PersistData : IPersistData
     {
         private const string FILE_PATH = @"C:\AdaptiveUIDemo\";
-        private const string FILE_NAME = @"Data.txt";
-        private string fullpath = Path.Combine(FILE_PATH, FILE_NAME);
-        public DataPersistance LoadData()
+        public DataPersistance LoadData(string userName )
         {
+			string fileSpec = CreateFileSpec(userName);
 
-            using (StreamReader file = File.OpenText(fullpath))
+			FileInfo fi = new FileInfo(fileSpec);
+			if (!fi.Exists)
+				throw new FileNotFoundException();
+
+            using (StreamReader file = File.OpenText(fileSpec))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 DataPersistance data = (DataPersistance)serializer.Deserialize(file, typeof(DataPersistance));
+               
                 return data;
             }
 
@@ -24,15 +28,21 @@ namespace AdaptiveUIDemo.Data
 
         public void SaveData(DataPersistance data)
         {
-
             string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
             if (Directory.Exists(FILE_PATH) != true)
             {
                 Directory.CreateDirectory(FILE_PATH);
             }
-            File.WriteAllText(fullpath, json);
+			string fileSpec = CreateFileSpec(data.UserName);
+            File.WriteAllText(fileSpec, json);
 
         }
-    }
+
+		private string CreateFileSpec(string userName)
+		{
+			string filename = string.Format("{0}.txt", userName);
+			return Path.Combine(FILE_PATH, filename);
+		}
+	}
 }

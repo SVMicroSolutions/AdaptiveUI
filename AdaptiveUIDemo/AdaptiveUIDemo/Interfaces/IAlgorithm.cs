@@ -7,5 +7,6 @@ namespace AdaptiveUIDemo.Interfaces
         void Learn(IData dataPoint);
         List<IData> OrderControls();
         string AlgorithmName { get; }
+        void Reset();
     }
 }

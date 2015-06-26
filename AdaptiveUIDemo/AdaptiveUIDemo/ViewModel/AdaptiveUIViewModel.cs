@@ -2,60 +2,64 @@
 using AdaptiveUIDemo.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using AdaptiveUIDemo.Interfaces;
+using System.Collections.ObjectModel;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace AdaptiveUIDemo.ViewModel
 {
-	public class AdaptiveUIViewModel : BaseViewModel
-	{
-		#region Properties 
-		private string appName = String.Empty;
+    public class AdaptiveUIViewModel : BaseViewModel
+    {
+        #region Properties 
+        private string appName = String.Empty;
         //private DumbAlgorithm _learner;
-		private ICommand _btnClickVal;
-		public ICommand BtnClick
-		{
-			get
-			{
-				return _btnClickVal;
-			}
-			set
-			{
-				_btnClickVal = value;
-			}
-		}        
+        private ICommand _btnClickVal;
+        private DataPersistance _data;
+        public ICommand BtnClick
+        {
+            get
+            {
+                return _btnClickVal;
+            }
+            set
+            {
+                _btnClickVal = value;
+            }
+        }
         public ICommand LoadDataClick { get; set; }
         public ICommand SaveDataClick { get; set; }
+
+        public ICommand ResetDataClick { get; set; }
 
         public List<string> Users { get; }
 
         public string CurrentUser { get; set; }
 
-		public string AppName
-		{
-			get
-			{
-				return appName;
-			}
-			set
-			{
-				if (value != appName)
-				{
-					appName = value;
-					RaisePropertyChanged();
-				}
-			}
-		}
+        public string AppName
+        {
+            get
+            {
+                return appName;
+            }
+            set
+            {
+                if (value != appName)
+                {
+                    appName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
-        public List<IAlgorithm> Algorithms{ get; set; }
-        
+        public List<IAlgorithm> Algorithms { get; set; }
+
         public IAlgorithm CurrentAlgo { get; set; }
-         
-        public ObservableCollection<IData> OrderedControls { get; }
+
+        public ObservableCollection<Interfaces.IData> OrderedControls { get; }
+
+        private List<IData> DataList { get; }
         #endregion
 
         #region PopulateAlgorthim(s)
@@ -74,71 +78,142 @@ namespace AdaptiveUIDemo.ViewModel
         #endregion
 
         public AdaptiveUIViewModel()
-		{
+        {
             AppName = "Adaptive UI Rocks!";
             PopulateAlgorthims();
             BtnClick = new CommandExecutor(new Action<object>(ExecuteBtnClick));
-            LoadDataClick = new CommandExecutor(new Action<object>(ExecuteLoadData));
-            SaveDataClick = new CommandExecutor(new Action<object>(ExecuteSaveData));
             Users = new List<string> { "Enrique", "Tom", "Sean", "Jay" };
             CurrentUser = Users[0];
-		    OrderedControls = new ObservableCollection<IData>
-		    {
-		        new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
+            DataList = new List<IData>();
+            OrderedControls = new ObservableCollection<Interfaces.IData>
+            {
+                new DataPoint("Button 1"), new DataPoint("Button 2"), new DataPoint("Button 3"),
                 new DataPoint("Button 4"), new DataPoint("Button 5"), new DataPoint("Button 6"),
                 new DataPoint("Button 7"), new DataPoint("Button 8"), new DataPoint("Button 9")
             };
-		    foreach (var c in OrderedControls)
-		    {
+            foreach (var c in OrderedControls)
+            {
+                DataList.Add(c);
                 foreach (var algo in Algorithms)
                 {
                     algo.Learn(c);
-                }
-		    }
 
-    
-		}
+                }
+            }
+
+        }
 
         private void ExecuteBtnClick(object obj)
-		{
-			string param = (string)obj;
-			if (string.Compare(param, "Go Button") == 0)
-				ProcessGoButton();
-			else
-				ProcessNumberButton(param);
-		}
-
-        private void ExecuteLoadData(object obj)
         {
-            
+            string param = (string)obj;
+            if (string.Compare(param, "Go Button") == 0)
+                ProcessGoButton();
+            else if (string.Compare(param, "Load Data") == 0)
+                ExecuteLoadData();
+            else if (string.Compare(param, "Save Button") == 0)
+                ExecuteSaveData();
+            else if (string.Compare(param, "Reset Data") == 0)
+                ExecuteResetData();
+            else
+                ProcessNumberButton(param);
         }
 
-        private void ExecuteSaveData(object obj)
+        private void ExecuteResetData()
+        {
+            // Reset the persisted data 
+            DataList.Clear();
+            OrderedControls.Clear();
+            // Reset the algorithms 
+            foreach (var algo in Algorithms)
+            {
+                algo.Reset();
+            }
+            //Add the Orginal Data list of controls to algorthim and save data
+            PopulateUI();
+        }
+        private void PopulateUI()
+        {
+            OrderedControls.Add(new DataPoint("Button 1"));
+            OrderedControls.Add(new DataPoint("Button 2"));
+            OrderedControls.Add(new DataPoint("Button 3"));
+            OrderedControls.Add(new DataPoint("Button 4"));
+            OrderedControls.Add(new DataPoint("Button 5"));
+            OrderedControls.Add(new DataPoint("Button 6"));
+            OrderedControls.Add(new DataPoint("Button 7"));
+            OrderedControls.Add(new DataPoint("Button 8"));
+            OrderedControls.Add(new DataPoint("Button 9"));
+
+            foreach (var c in OrderedControls)
+            {
+                DataList.Add(c);
+                foreach (var algo in Algorithms)
+                {
+                    algo.Learn(c);
+
+                }
+
+            }
+        }
+        //    DataPersistance persistenceData = new DataPersistance();
+        //    persistenceData.UserName = CurrentUser;
+        //    PersistData data = new PersistData();
+        //    var loadedData = data.LoadData();
+        //    if (loadedData.UserName == CurrentUser)
+        //    {
+        //        foreach (var c in loadedData.Data)
+        //        {
+        //            ProcessNumberButton(c.ControlName);
+        //        }
+        //    }
+
+        //}
+        private void ExecuteLoadData()
+        {
+            System.Diagnostics.Debug.WriteLine("Load Data has been clicked.");
+
+
+
+            PersistData data = new PersistData();
+            var loadedData = data.LoadData(CurrentUser);
+            foreach (var c in loadedData.Data)
+            {
+                ProcessNumberButton(c.ControlName);
+            }
+
+        }
+
+        private void ExecuteSaveData()
         {
 
+            DataPersistance persistanceData = new DataPersistance();
+            persistanceData.UserName = CurrentUser;
+            foreach (IData dta in DataList)
+            {
+                persistanceData.Data.Add((DataPoint)dta);
+            }
+            var persistData = new PersistData();
+            persistData.SaveData(persistanceData);
         }
         private void ProcessGoButton()
-		{
-			System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
+        {
+            System.Diagnostics.Debug.WriteLine("Go Button has been clicked.");
             var controls = CurrentAlgo.OrderControls();
             OrderedControls.Clear();
             foreach (var c in controls)
             {
                 OrderedControls.Add(c);
             }
-
-            // TODO do something useful
         }
 
-		private void ProcessNumberButton(string param)
-		{
-			System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
+        private void ProcessNumberButton(string param)
+        {
+            System.Diagnostics.Debug.WriteLine(string.Format("{0} has been clicked.", param));
 
-            CurrentAlgo.Learn(new DataPoint (param));
-            
+            var dp = new DataPoint(param);
+            Algorithms.ForEach(x => x.Learn(dp));
+            DataList.Add(dp);
+        }
 
-			// TODO process the button information.
-		}
 
-	}
+    }
 }
