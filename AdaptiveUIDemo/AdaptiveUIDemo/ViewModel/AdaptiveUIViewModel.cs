@@ -147,7 +147,6 @@ namespace AdaptiveUIDemo.ViewModel
 					algo.Learn(c);
 
 				}
-
 			}
 		}
 
@@ -205,7 +204,7 @@ namespace AdaptiveUIDemo.ViewModel
 
 		private void ProcessNumberButton(string param)
 		{
-			Debug.WriteLine(string.Format("{0} has been clicked.", param));
+			Debug.WriteLine($"{param} has been clicked.");
 
 			var dp = new DataPoint(param);
 			Algorithms.ForEach(x => x.Learn(dp));

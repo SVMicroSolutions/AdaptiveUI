@@ -45,7 +45,7 @@ namespace AdaptiveUIDemo.Data
 
 		private static string CreateFileSpec(string userName)
 		{
-			var filename = string.Format("{0}.txt", userName);
+			var filename = $"{userName}.txt";
 			return Path.Combine(FILE_PATH, filename);
 		}
 	}
