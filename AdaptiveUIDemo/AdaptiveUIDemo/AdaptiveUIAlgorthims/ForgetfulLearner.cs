@@ -29,6 +29,10 @@ namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
             {
                 base.Learn(dataPoint);
             }
+            else if (!HitCountData.ContainsKey(dataPoint))
+            {
+                base.Learn(dataPoint);
+            }
             _usedControls[dataPoint] = dataPoint;
         }
 
