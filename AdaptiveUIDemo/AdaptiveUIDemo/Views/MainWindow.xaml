@@ -44,15 +44,19 @@
             </ListView>
         <UniformGrid >
 
-            <ComboBox x:Name="userName"
-                      ItemsSource="{Binding Users}"
-                      SelectedItem="{Binding CurrentUser}"/>
+           
+            <ComboBox x:Name="selectedAlgo"
+                      ItemsSource="{Binding Algorithms}"
+                      SelectedItem="{Binding CurrentAlgo}"/>
             <Button x:Name="go" Content="Go"
 					Command="{Binding BtnClick}"
 					CommandParameter="Go Button"
 					/>
         </UniformGrid>
         <UniformGrid >
+            <ComboBox x:Name="userName"
+                      ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding CurrentUser}"/>
             <Button x:Name="loadDataButton" Content="LoadData"
         		Command="{Binding LoadDataClick}"
         		CommandParameter="Load Data"
@@ -61,6 +65,10 @@
             <Button x:Name="saveDataButton" Content="SaveData" 
         		Command="{Binding BtnClick}"
         		CommandParameter="Save Button"
+					/>
+            <Button x:Name="resetDataButton" Content="ResetData" 
+        		Command="{Binding BtnClick}"
+                CommandParameter="Reset Data"    
 					/>
         </UniformGrid>
     </StackPanel>
