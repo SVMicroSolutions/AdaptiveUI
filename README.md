@@ -14,5 +14,5 @@ Build and start the application and then press the buttons in some random order.
 Select the algorithm from the combo box underneath the buttons and then press Go to see
 how they the UI changes. 
 
-Button presses can be saved/restored from the disk for testing. 
+Button presses can be saved/restored from the disk for testing algorithms. 
 
