@@ -1,47 +1,51 @@
-﻿using System;
-using Newtonsoft.Json;
-using System.IO;
+﻿using System.IO;
 using AdaptiveUIDemo.Interfaces;
+using Newtonsoft.Json;
 
-namespace AdaptiveUIDemo.Data  
+namespace AdaptiveUIDemo.Data
 {
-    public class PersistData : IPersistData
-    {
-        private const string FILE_PATH = @"C:\AdaptiveUIDemo\";
-        public DataPersistance LoadData(string userName )
-        {
-			string fileSpec = CreateFileSpec(userName);
+	public class PersistData : IPersistData
+	{
+		private const string FILE_PATH = @"C:\AdaptiveUIDemo\";
 
-			FileInfo fi = new FileInfo(fileSpec);
-			if (!fi.Exists)
+		public DataPersistance LoadData(string userName)
+		{
+			var fileSpec = CreateFileSpec(userName);
+			var fInfo = new FileInfo(fileSpec);
+			if (!fInfo.Exists)
 				throw new FileNotFoundException();
 
-            using (StreamReader file = File.OpenText(fileSpec))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                DataPersistance data = (DataPersistance)serializer.Deserialize(file, typeof(DataPersistance));
-               
-                return data;
-            }
+			using (var file = File.OpenText(fileSpec))
+			{
+				var serializer = new JsonSerializer();
+				var data = (DataPersistance) serializer.Deserialize(file, typeof (DataPersistance));
 
-        }
+				return data;
+			}
+		}
 
-        public void SaveData(DataPersistance data)
-        {
-            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-
-            if (Directory.Exists(FILE_PATH) != true)
-            {
-                Directory.CreateDirectory(FILE_PATH);
-            }
-			string fileSpec = CreateFileSpec(data.UserName);
-            File.WriteAllText(fileSpec, json);
-
-        }
-
-		private string CreateFileSpec(string userName)
+		public void SaveData(DataPersistance data)
 		{
-			string filename = string.Format("{0}.txt", userName);
+			var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+			if (Directory.Exists(FILE_PATH) != true)
+			{
+				Directory.CreateDirectory(FILE_PATH);
+			}
+			var fileSpec = CreateFileSpec(data.UserName);
+
+			// File.WriteAllText is supposed to overwrite existing file, but appears to be appending instead.
+			// therefore, we want to delete the existing file before writing to it.
+			var fInfo = new FileInfo(fileSpec);
+			if (fInfo.Exists)
+				fInfo.Delete();
+
+			File.WriteAllText(fileSpec, json);
+		}
+
+		private static string CreateFileSpec(string userName)
+		{
+			var filename = string.Format("{0}.txt", userName);
 			return Path.Combine(FILE_PATH, filename);
 		}
 	}

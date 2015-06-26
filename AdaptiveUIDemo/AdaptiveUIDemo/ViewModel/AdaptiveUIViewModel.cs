@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using AdaptiveUIDemo.AdaptiveUIAlgorthims;
 using AdaptiveUIDemo.Data;
@@ -56,8 +58,8 @@ namespace AdaptiveUIDemo.ViewModel
 				new BoundedLearner(),
 				new SeanAlgorithm(),
 				new ForgetfulLearner(),
-				new TomAlgorithm() ,
-                new TimeAlgorithm()
+				new TomAlgorithm(),
+				new TimeAlgorithm()
 			};
 			CurrentAlgo = Algorithms[0];
 		}
@@ -153,20 +155,31 @@ namespace AdaptiveUIDemo.ViewModel
 		{
 			Debug.WriteLine("Load Data has been clicked.");
 
+			var data = new PersistData();
+			var loadedData = new DataPersistance();
+			try
+			{
+				loadedData = data.LoadData(CurrentUser);
+			}
+			catch (FileNotFoundException)
+			{
+				MessageBox.Show(string.Format("File not found for user \"{0}\"", CurrentUser), "File not found", MessageBoxButton.OK, MessageBoxImage.Stop);
+			}
 
+			if (loadedData.Data.Count <= 0)
+				return;
 
-			PersistData data = new PersistData();
-			var loadedData = data.LoadData(CurrentUser);
+			ExecuteResetData();
 			foreach (var c in loadedData.Data)
 			{
 				ProcessNumberButton(c.ControlName);
 			}
-
+			ProcessGoButton();
 		}
+	
 
-		private void ExecuteSaveData()
+	private void ExecuteSaveData()
 		{
-
 			DataPersistance persistanceData = new DataPersistance
 			{
 				UserName = CurrentUser
