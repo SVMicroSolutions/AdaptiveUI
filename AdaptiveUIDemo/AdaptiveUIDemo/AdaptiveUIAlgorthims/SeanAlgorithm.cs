@@ -7,10 +7,19 @@ using System.Threading.Tasks;
 
 namespace AdaptiveUIDemo.AdaptiveUIAlgorthims
 {
-    class SeanAlgorithm : DumbAlgorithm
+    /// <summary>
+    /// Uses a method 
+    /// </summary>
+    public class SeanAlgorithm : DumbAlgorithm
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SeanAlgorithm"/> class.
+        /// </summary>
         public SeanAlgorithm()
             : base("Wacky")
         { }
+
+        // Want t
+
     }
 }

@@ -58,7 +58,7 @@
                       ItemsSource="{Binding Users}"
                       SelectedItem="{Binding CurrentUser}"/>
             <Button x:Name="loadDataButton" Content="LoadData"
-        		Command="{Binding LoadDataClick}"
+        		Command="{Binding BtnClick}"
         		CommandParameter="Load Data"
                     
 					/>
