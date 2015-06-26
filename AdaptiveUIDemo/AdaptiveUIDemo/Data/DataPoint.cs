@@ -18,6 +18,7 @@ namespace AdaptiveUIDemo.Data
         public string ControlName { get; set; }
 
         public DateTime TimeOfInteraction { get; set; }
+        public double Rank { get; set; }
 
         public override bool Equals(object obj)
         {

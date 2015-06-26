@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AdaptiveUIDemo.Data;
 using AdaptiveUIDemo.AdaptiveUIAlgorthims;
@@ -28,6 +29,9 @@ namespace AlgorithmTests
             Assert.AreEqual(data2, learnedPoints[0], "First control should be c2");
             Assert.AreEqual(data3, learnedPoints[1], "Second control should be c3");
             Assert.AreEqual(data1, learnedPoints[2], "Third control should be c1");
+            Assert.AreEqual(1, learnedPoints[0].Rank);
+            Assert.AreEqual(0.6, learnedPoints[1].Rank, 0.1);
+            Assert.AreEqual(0.3, learnedPoints[2].Rank, 0.1);
         }
     }
 }

@@ -72,6 +72,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\RankToSizeConverter.cs" />
     <Compile Include="Data\DataPersistance.cs" />
     <Compile Include="Data\DataPoint.cs" />
     <Compile Include="Data\PersistData.cs" />
